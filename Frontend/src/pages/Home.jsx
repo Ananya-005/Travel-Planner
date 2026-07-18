@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -12,24 +11,15 @@ export default function Home() {
   const [budget, setBudget] = useState("Medium");
 
   const generateItinerary = async () => {
-    try {
-      const res = await axios.post(
-        "http://localhost:3000/api/itinerary/generate",
-        {
-          description,
-          startDate,
-          endDate,
-          budget,
-          travelStyle,
-        }
-      );
-
-      navigate("/itinerary", {
-        state: res.data.data,
-      });
-    } catch (err) {
-      console.error(err);
-    }
+    navigate("/loading", {
+  state: {
+    description,
+    startDate,
+    endDate,
+    budget,
+    travelStyle,
+  },
+});
   };
   return (
     
