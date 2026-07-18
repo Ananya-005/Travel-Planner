@@ -140,12 +140,12 @@ Approximate development time:
 | Task | Time |
 |------|------|
 | UI Design | 3 hours |
-| Frontend Development | 4 hours |
-| Backend API | 2 hours |
-| Gemini Integration | 2 hours |
-| Testing & Debugging | 3 hours |
+| Frontend Development | 3 hours |
+| Backend API | 1 hours |
+| Gemini Integration | 20 mins|
+| Testing & Debugging | 2 hours |
 
-**Total:** ~14 hours
+**Total:** ~9.5 hours
 
 ---
 
