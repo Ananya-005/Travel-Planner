@@ -1,14 +1,56 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 
 export default function Itinerary() {
   const navigate = useNavigate();
   const location = useLocation();
-const trip = location.state;
+  const [trip, setTrip] = useState(location.state);
   const [openDay, setOpenDay] = useState(1);
+const removeStop = (dayIndex, stopIndex) => {
+  const newTrip = { ...trip };
+
+  newTrip.days[dayIndex].stops.splice(stopIndex, 1);
+
+  setTrip(newTrip);
+};
+const moveUp = (dayIndex, stopIndex) => {
+  if (stopIndex === 0) return;
+
+  const newTrip = { ...trip };
+  const stops = newTrip.days[dayIndex].stops;
+
+  let temp = stops[stopIndex].place;
+  stops[stopIndex].place = stops[stopIndex - 1].place;
+  stops[stopIndex - 1].place = temp;
+
+  temp = stops[stopIndex].description;
+  stops[stopIndex].description = stops[stopIndex - 1].description;
+  stops[stopIndex - 1].description = temp;
+
+  setTrip(newTrip);
+};
+const moveDown = (dayIndex, stopIndex) => {
+  const newTrip = { ...trip };
+  const stops = newTrip.days[dayIndex].stops;
+
+  if (stopIndex === stops.length - 1) return;
+
+  const tempPlace = stops[stopIndex].place;
+  const tempDesc = stops[stopIndex].description;
+
+  stops[stopIndex].place = stops[stopIndex + 1].place;
+  stops[stopIndex].description = stops[stopIndex + 1].description;
+
+  stops[stopIndex + 1].place = tempPlace;
+  stops[stopIndex + 1].description = tempDesc;
+
+  setTrip(newTrip);
+};
+
   if (!trip) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -84,7 +126,7 @@ const trip = location.state;
 
         <div className="mt-8 space-y-5">
 
-          {trip.days.map((day) => (
+          {trip.days.map((day,dayIndex) => (
 
             <div
               key={day.day}
@@ -137,15 +179,21 @@ const trip = location.state;
                       </p>
 
                       <div className="mt-4 flex gap-3">
-                        <button className="rounded-lg bg-red-100 px-3 py-2 text-sm text-red-700 transition hover:bg-red-200 cursor-pointer">
+                        <button 
+                        onClick={() => removeStop(dayIndex, index)}
+                        className="rounded-lg bg-red-100 px-3 py-2 text-sm text-red-700 transition hover:bg-red-200 cursor-pointer">
                           🗑 Remove
                         </button>
 
-                        <button className="rounded-lg bg-green-100 px-3 py-2 text-sm text-[#36523C] transition hover:bg-green-200 cursor-pointer">
+                        <button 
+                        onClick={() => moveUp(dayIndex, index)}
+                        className="rounded-lg bg-green-100 px-3 py-2 text-sm text-[#36523C] transition hover:bg-green-200 cursor-pointer">
                           ⬆ Move Up
                         </button>
 
-                        <button className="rounded-lg bg-green-100 px-3 py-2 text-sm text-[#36523C] transition hover:bg-green-200 cursor-pointer">
+                        <button 
+                        onClick={() => moveDown(dayIndex, index)}
+                        className="rounded-lg bg-green-100 px-3 py-2 text-sm text-[#36523C] transition hover:bg-green-200 cursor-pointer">
                           ⬇ Move Down
                         </button>
                       </div>
@@ -162,9 +210,17 @@ const trip = location.state;
           ))}
 
         </div>
+        <button
+          onClick={() => navigate("/")}
+          className="mb-6 mt-4 flex items-center gap-2 rounded-xl bg-[#5D8B5A] px-5 py-2 text-white hover:bg-[#4F7750] transition cursor-pointer"
+        >
+          <ChevronLeft size={18} />
+          Back Home
+        </button>
+
 
       </div>
-
+      
     </div>
   );
 }
