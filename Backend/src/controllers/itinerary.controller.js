@@ -1,6 +1,7 @@
 const { generateTripItinerary } = require("../services/gemini.service");
 
 const generateItinerary = async (req, res) => {
+  console.log(req.body);
   try {
     const {
       description,

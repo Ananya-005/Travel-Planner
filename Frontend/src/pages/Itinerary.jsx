@@ -1,83 +1,37 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import { useLocation } from "react-router-dom";
+
 
 export default function Itinerary() {
   const navigate = useNavigate();
+  const location = useLocation();
+const trip = location.state;
   const [openDay, setOpenDay] = useState(1);
+  if (!trip) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-[#36523C]">
+            No itinerary found
+          </h2>
 
-  const trip = {
-    destination: "Tokyo Adventure",
-    date: "20 Aug",
-    budget: "Medium Budget",
-    travelStyle: "Friends",
-    interests: ["🍜 Food", "🛍 Shopping", "🎌 Anime"],
-    days: [
-      {
-        day: 1,
-        emoji: "🌤️",
-        stops: [
-          {
-            time: "Morning",
-            place: "📍 Sensoji Temple",
-            description: "Explore Tokyo's oldest temple.",
-          },
-          {
-            time: "Afternoon",
-            place: "🍜 Ichiran Ramen",
-            description: "Enjoy Tokyo's famous ramen.",
-          },
-          {
-            time: "Evening",
-            place: "🗼 Tokyo Skytree",
-            description: "Watch the sunset over Tokyo.",
-          },
-        ],
-      },
-      {
-        day: 2,
-        emoji: "🌸",
-        stops: [
-          {
-            time: "Morning",
-            place: "🎌 Meiji Shrine",
-            description: "Peaceful shrine surrounded by forest.",
-          },
-          {
-            time: "Afternoon",
-            place: "🛍 Shibuya Crossing",
-            description: "Shopping and city vibes.",
-          },
-          {
-            time: "Evening",
-            place: "🍣 Sushi Dinner",
-            description: "Traditional Japanese cuisine.",
-          },
-        ],
-      },
-      {
-        day: 3,
-        emoji: "🌊",
-        stops: [
-          {
-            time: "Morning",
-            place: "🐟 Tsukiji Market",
-            description: "Fresh seafood breakfast.",
-          },
-          {
-            time: "Afternoon",
-            place: "🌳 Ueno Park",
-            description: "Relax and explore museums.",
-          },
-          {
-            time: "Evening",
-            place: "🎡 Odaiba",
-            description: "Beautiful waterfront views.",
-          },
-        ],
-      },
-    ],
-  };
+          <p className="text-gray-500 mt-2">
+            Generate a new itinerary to continue.
+          </p>
+
+          <button
+            onClick={() => navigate("/")}
+            className="mt-5 rounded-xl bg-[#5D8B5A] px-6 py-3 text-white"
+          >
+            Back Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen bg-[#F7F9F2] flex justify-center py-10 px-6">
@@ -109,7 +63,7 @@ export default function Itinerary() {
 
             <p>💰 {trip.budget}</p>
 
-            <p>📍 Tokyo, Japan</p>
+            <p>📍 {trip.destination}</p>
 
           </div>
 
