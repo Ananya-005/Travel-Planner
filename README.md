@@ -1,3 +1,8 @@
+
+
+https://github.com/user-attachments/assets/13f4c23a-dde6-4259-a132-c7c223681792
+
+
 # AI Travel Itinerary Planner ✈️🌍
 
 An AI-powered travel planner that generates personalized multi-day itineraries based on the user's destination, travel dates, budget, travel style, and preferences.
